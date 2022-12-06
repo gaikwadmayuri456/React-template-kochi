@@ -19,7 +19,7 @@ const store = configureStore({
 });
 
 // Shoukd end without '/'
-axios.defaults.baseURL = "https://api.smart-iam.com/api/image-store";
+// axios.defaults.baseURL = "https://api.smart-iam.com/api/image-store";
 // axios.defaults.baseURL = 'http://192.168.2.118:8002';
 // axios.defaults.baseURL = 'http://192.168.1.238:8096';
 //  axios.defaults.baseURL = 'http://192.168.2.22:8082';
