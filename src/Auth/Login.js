@@ -1,79 +1,151 @@
 import React from "react";
-import { Form, Input, Button, Checkbox, message } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Card, Typography, Avatar, message } from "antd";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { ar_loginUser } from "../Redux/Actions/AuthActions";
 
-export default function Login() {
-    const onFinish = values => {
-        console.log("Received values of form: ", values);
-        // axios.post("/login", {
-        //     username: values.username,
-        //     password: values.password,
-        // })
-        //     .then(res => {
-        //         console.log(res.data);
-        //         localStorage.setItem("token", res.data.token);
-        //         window.location.href = "/";
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //         message.error(err.response.data.message);
-        //     });
+const { Title } = Typography;
+const { Meta } = Card;
+
+const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onFinish = (values) => {
+    const LoginDetails = {
+      username: values.Username,
+      password: values.Password,
     };
+    // axios
+    //   .post("/auth", LoginDetails)
+    //   .then((response) => {
+    //     localStorage.setItem("JWTtoken", response.data.token);
+    //     window.location.href = "/";
+    //     try {
+    //       window.location.href = history.location.state.from;
+    //     } catch (error) {
+    //       window.location.href = "/";
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     try {
+    //       message.error([err.response.data.detail]);
+    //     } catch (error1) {
+    //       message.error("Backend server not responding");
+    //     }
+    //   });
 
-    return (
-        <div className="login-outer-div">
+    if(values.Username ==='admin'&& values.Password ==='admin')
+    {
+      localStorage.setItem("LoginStatus",true)
+      const data = {
+                    isLogged: true,
+                    userId: "DummyUser",
+                    userName: "DummyName",
+                  };
+                dispatch(ar_loginUser(data));
+                // navigate("/")
+                window.location.href = "/";
+    }
+    else
+    {
+      message.error("Incorrect Usename and Password")
+    }
+  };
+  const onFinishFailed = (errorInfo) => {
+    // console.log("Failed:", errorInfo);
+  };
+  const onFormClick = (values) => {
+     if(values.Username ==='admin'&& values.Password ==='admin')
+    {
+      localStorage.setItem(
+        "JWTtoken",
+        "sha512-UfpWE/VZn0iP50d8cz9NrZLM9lSWhcJ+0Gt/nm4by88UL+J1SiKN8/5dkjMmbEzwL2CAe+67GsegCbIKtbp75A=="
+      );
+      navigate("/panel");
+    }
+   };
+
+  return (
+    <>
+      <div
+        style={{
+          height: "100vh",
+          backgroundImage: `url("/ncrtc_login.jpg")`,
+          backgroundColor: "white",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "bottom",
+          backgroundSize: "cover",
+
+          textAlign: "center",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            minWidth: "100%",
+            minHeight: "100%",
+            textAlign: "center",
+            display: "-webkit-flex",
+            alignItems: "center",
+          }}
+        >
+          <Card
+            bordered={true}
+            hoverable={true}
+            style={{
+              margin: "Auto",
+              width: "400px",
+            }}
+          >
+            <Meta
+              // avatar={<Avatar src="Delhi_Metro_logo.png" />}
+              title={<Title level={3}>Metro Login</Title>}
+            />
+            <br></br>
             <Form
-                name="normal_login"
-                className="login-form"
-                initialValues={{
-                    remember: true,
-                }}
-                onFinish={onFinish}
-                title="Login"
-                
-                // style={{ width: "500px" }}
+              name="basic"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              initialValues={{ remember: true }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="off"
             >
-                <h1>Login </h1>
-                <Form.Item
-                    name="username"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Please input your Username!",
-                        },
-                    ]}
-                >
-                    <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-                </Form.Item>
-                <Form.Item
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: "Please input your Password!",
-                        },
-                    ]}
-                >
-                    <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
-                </Form.Item>
-                {/* <Form.Item>
-                    <Form.Item name="remember" valuePropName="checked" noStyle>
-                        <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
-    
-                    <a className="login-form-forgot" href="">
-                        Forgot password
-                    </a>
-                </Form.Item> */}
-    
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
-                        Log in
-                    </Button>
-                </Form.Item>
-            </Form>
-        </div>
-    );
-};
+              <Form.Item
+                label="Username"
+                name="Username"
+                rules={[
+                  { required: true, message: "Please input your username!" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
 
+              <Form.Item
+                label="Password"
+                name="Password"
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
+             <Form.Item wrapperCol={{ offset: 8, span: 8 }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ backgroundColor: "black" }}
+                  onClick={onFormClick}
+                >
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+          </Card>
+        </div>
+      </div>
+    </>
+  );
+};
+export default Login;

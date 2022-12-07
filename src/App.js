@@ -173,7 +173,7 @@ function App() {
 						</>
 					} />
                     {/* Main home page which will show all list of escalator */}
-                <Route path="*" element={<EscalatorList/>} />
+                {/* <Route path="*" element={<EscalatorList/>} /> */}
 				</Route>
 
 			</Routes>

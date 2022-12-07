@@ -1,4 +1,4 @@
-import { Layout, Menu, Spin } from "antd";
+import { Layout } from "antd";
 import React from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Outlet, Route, Routes } from "react-router-dom";
@@ -10,7 +10,6 @@ const { Footer } = Layout;
 
 
 export default function MyNavbar({ collapsed, setCollapse, globalSearchItems }) {
-
     return (
         <Layout>
             <Layout.Header>
@@ -27,28 +26,17 @@ export default function MyNavbar({ collapsed, setCollapse, globalSearchItems }) 
                             alt="logo"
                             src="https://images.smart-iam.com/logo.png"
                             style={{ height: "30px", marginLeft: '10px' }}
-                        />
-                    </span>
+                        /></span>
                     <div id="navbar-portal">
-
                     </div>
+                    <Image
+                        width={100}
+                        height={90}
+                        preview={false}
+                        src="warning.gif"
+                    />
                 </div>
             </Layout.Header>
-            <div style={{
-                // backgroundColor:"grey",
-                position: 'sticky',
-                top: 0,
-                zIndex: 1,
-                width: '100%',
-                height:"10%",justifyContent:"center",display:"flex"
-            }}>
-                 <Image
-    width={100}
-    height={100}
-    preview={false}
-    src="warning.gif"
-  />
-                </div>
             <Layout.Content className="main-content-div">
                 {/* {globalReducer?.orgLoading || !globalReducer?.selectedOrg?.orgId ? (
                     <div className="App" style={{textAlign: 'center'}}>
@@ -58,7 +46,7 @@ export default function MyNavbar({ collapsed, setCollapse, globalSearchItems }) 
                 <Outlet />
                 {/* )} */}
             </Layout.Content>
-            <Footer style={{ display: "flex", width: "100%", justifyContent: "center", height: "5%", backgroundColor: "grey", position: "fixed", bottom: "0px" }}>Integreted Active Monitoring</Footer>
+            <Footer style={{ display: "flex", width: "100%", justifyContent: "center", height: "5px", position: "fixed", bottom: "0px", fontWeight: "bold" }}><a href="https://smartiam.in/" target="_blank">Integreted Active Monitoring</a></Footer>
         </Layout>
     );
 }
