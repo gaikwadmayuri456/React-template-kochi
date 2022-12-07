@@ -21,7 +21,7 @@ export default function MySider({ collapsed, onCollapse, menuItems=[] }) {
             // collapsible={true}
         >
             <div className="sidebar-top-logo" style={collapsed ? {textAlign: 'center'} : {textAlign: 'center'} }>
-                <FiUser style={{fontSize: '25px'}} />
+            <img src={process.env.REACT_APP_LOGO} height="90px" width="125px" style={{padding:"15"}} />
                 {!collapsed && 
                     <>{authReducer?.user?.username}</>
                 }

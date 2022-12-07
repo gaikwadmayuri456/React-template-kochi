@@ -4,7 +4,6 @@ export const ar_loginUser = (details) => {
         payload: details,
     };
 };
-
 export const ar_logoutUser = () => {
     localStorage.removeItem("JWTtoken");
     return {

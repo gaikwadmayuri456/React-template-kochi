@@ -80,6 +80,7 @@ body {
 	border-bottom: 1px solid var(--sidebarBorder);
 	height: var(--navbarHeight);
 	line-height: var(--navbarHeight);
+	background-color: #18232D;
 }
 
 .sidebar-content {
@@ -128,3 +129,16 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+.ant-table-thead > tr > th {
+	position: relative;
+	color: white;
+	font-weight: 500;
+	text-align: left;
+	background: #001529;
+	border-bottom: 1px solid #f0f0f0;
+	transition: background 0.3s ease;
+  }
+  .rowclass {
+	color: black;
+	background-color: #a2b9c0;
+  }

@@ -1,15 +1,44 @@
+import React, { useEffect } from "react";
 import { Layout } from "antd";
-import React from "react";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import { Outlet, Route, Routes } from "react-router-dom";
 // import OrgSelector from "../Components/OrgSelector";
-import { Image } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Image, Tooltip } from "antd";
+import {setAlarmAck ,setShowAlarm} from "../Redux/Actions/FaultDetails";
 import GlobalSearch from "./GlobalSearch";
 const { Footer } = Layout;
 
-
 export default function MyNavbar({ collapsed, setCollapse, globalSearchItems }) {
+    const dispatch = useDispatch();
+    const buzzer_status = useSelector(state => state.FaultDataReducer.buzzer_status);
+    const show_alarm = useSelector(state => state.FaultDataReducer.show_alarm);
+    const current_alarm_ack = useSelector(state => state.FaultDataReducer.alarm_ack);
+    function playaudio() {
+        var x = document.getElementById("abc");
+        x.play();
+    }
+    useEffect(() => {
+        if (buzzer_status === true && current_alarm_ack === false && show_alarm === true) {
+            playaudio();
+        }
+        else {
+            stopaudio()
+        }
+    }, [buzzer_status, current_alarm_ack, show_alarm])
+    function stopaudio() {
+        var x = document.getElementById("abc");
+        x.pause();
+    }
+
+    const onClickOnImage = () => {
+        // The buzzer should stop
+        // Which means our state variables  => 
+        //  buzzer_status should as it was
+        // current_alarm_ack should be true
+        dispatch(setAlarmAck(true));
+        dispatch(setShowAlarm(false))// will stop alarm buzzzer when user click on this buzzer
+    }
     return (
         <Layout>
             <Layout.Header>
@@ -27,14 +56,20 @@ export default function MyNavbar({ collapsed, setCollapse, globalSearchItems }) 
                             src="https://images.smart-iam.com/logo.png"
                             style={{ height: "30px", marginLeft: '10px' }}
                         /></span>
-                    <div id="navbar-portal">
+                     <div id="navbar-portal">
+                     <h1 style={{color:"white",fontSize:"20px"}}>Welcome To {process.env.REACT_APP_METRO_NAME} Metro</h1>
                     </div>
-                    <Image
-                        width={100}
-                        height={90}
-                        preview={false}
-                        src="warning.gif"
-                    />
+                    {
+                        buzzer_status === true && current_alarm_ack === false
+                            && show_alarm === true
+                            ?
+                            <Tooltip title="Please Click on image to reset" color="green">
+                                <Image width={100} height={90} src="warning.gif" preview={false}
+                                    // onLoad={playaudio}
+                                    onClick={onClickOnImage} />
+                            </Tooltip>
+                            : <></>
+                    }
                 </div>
             </Layout.Header>
             <Layout.Content className="main-content-div">

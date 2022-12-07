@@ -20,7 +20,7 @@ const store = configureStore({
 
 // Shoukd end without '/'
 // axios.defaults.baseURL = "https://api.smart-iam.com/api/image-store";
-// axios.defaults.baseURL = 'http://192.168.2.118:8002';
+axios.defaults.baseURL = 'http://172.16.7.30:5001';
 // axios.defaults.baseURL = 'http://192.168.1.238:8096';
 //  axios.defaults.baseURL = 'http://192.168.2.22:8082';
 
@@ -64,6 +64,9 @@ root.render(
     <Provider store={store}>
         <BrowserRouter>
             <App />
+            <audio id="abc" loop>
+                <source src="alarm.mp3" type="audio/mp3"></source>
+            </audio>
         </BrowserRouter>
     </Provider>
     // </React.StrictMode>
